@@ -1,8 +1,0 @@
-#java
-*.class
-*.jar
-*.war
-*.ear
-# Maven
-/target/
-/logs/

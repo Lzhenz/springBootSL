@@ -1,0 +1,19 @@
+package com.example.helloSpringBoot.DTO;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+@Data
+public class PhoneDTO {
+
+    @Min(value = 1, message = "电池容量必须大于0")
+    private String batteryNum;
+
+    @NotBlank(message = "手机名称不允许为空")
+    private String phoneName;
+
+    @Min(value = 1 , message = "金额需要大于0")
+    private int price;
+
+}
