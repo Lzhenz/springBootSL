@@ -1,0 +1,30 @@
+#java
+*.class
+*.jar
+*.war
+*.ear
+# Maven
+/target/
+/logs/
+.mvn/
+# Gradle
+/build/
+/.gradle/
+# Eclipse
+/.classpath
+/.project
+/.settings/
+# IntelliJ
+/.idea/
+*.iml
+/out/
+# Windows
+Thumbs.db
+.DS_Store
+desktop.ini
+$RECYCLE.BIN/
+
+# log
+*.log
+
+.history/
