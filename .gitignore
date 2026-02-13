@@ -26,3 +26,8 @@ $RECYCLE.BIN/
 
 # log
 *.log
+
+.history/
+
+# vscode
+*.code-workspace
