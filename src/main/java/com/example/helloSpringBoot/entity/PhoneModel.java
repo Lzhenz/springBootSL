@@ -18,7 +18,7 @@ public class PhoneModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String Model;
+    private String model;
 
     private String phonename;
 
