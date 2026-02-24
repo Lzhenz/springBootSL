@@ -19,10 +19,11 @@ public class PhoneService {
 
     public void create(PhoneDTO phoneDTO){
         PhoneModel entity = new PhoneModel();
-        entity.setModel("xiaomi");
+        entity.setModel(phoneDTO.getModel());
         entity.setPhonename(phoneDTO.getPhoneName());;
         entity.setPrice(phoneDTO.getPrice());
         entity.setCreatedat(LocalDateTime.now());
+        entity.setStock(phoneDTO.getStock());
 
         // repository.save(entity);
         PhoneModel saved = repository.saveAndFlush(entity);

@@ -6,25 +6,4 @@ import com.example.helloSpringBoot.DTO.PhoneDTO;
 
 @Service
 public class SearchPhoneService {
-    
-    public PhoneDTO getPhoneNameOneTime(String brandName){
-        PhoneDTO phoneDTO = new PhoneDTO();
-        if ("xiaomi".equals(brandName)) {
-            phoneDTO.setPhoneName("xiaomi 17 utral");
-        }else{
-            phoneDTO.setPhoneName("unKnowBrand");
-        }
-        return phoneDTO;
-    }
-
-    public PhoneDTO getBatteryNum(String brandName){
-        PhoneDTO phoneDTO = new PhoneDTO();
-        if ("xiaomi".equals(brandName)) {
-            phoneDTO.setBatteryNum("4800mAh");
-        }else{
-            phoneDTO.setBatteryNum("null");
-        }
-
-        return phoneDTO;
-    }
 }

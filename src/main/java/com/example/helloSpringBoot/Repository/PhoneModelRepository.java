@@ -1,7 +1,8 @@
 package com.example.helloSpringBoot.Repository;
 
 import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.helloSpringBoot.entity.PhoneModel;
@@ -10,5 +11,9 @@ import com.example.helloSpringBoot.entity.PhoneModel;
 public interface PhoneModelRepository extends JpaRepository<PhoneModel , Long>{
 
     List<PhoneModel> findByPhonename(String phoneName);
+
+    Page<PhoneModel> findByModel(String model , Pageable pageable);
+
+    Page<PhoneModel> findByModelAndPriceBetween(String model, Double minPrice, Double maxPrice, Pageable pageable);
 
 }

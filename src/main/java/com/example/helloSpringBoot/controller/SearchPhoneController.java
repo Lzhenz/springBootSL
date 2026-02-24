@@ -2,6 +2,10 @@ package com.example.helloSpringBoot.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,21 +37,6 @@ public class SearchPhoneController {
         this.phoneModelService = phoneModelService;
     }
 
-    @Operation(summary = "查询手机的名称专名(测试)")
-    @GetMapping("/searchPhoneName")
-    public PhoneDTO getSearchPhoneName(@RequestParam String brand){
-        // 调用service
-        PhoneDTO phoneDTO = searchPhoneService.getPhoneNameOneTime(brand);
-        return phoneDTO;
-    }
-
-    @Operation(summary = "查询手机的电池容量(测试)")
-    @GetMapping("/battery")
-    public PhoneDTO getBatteryNum(@RequestParam String brand){
-        PhoneDTO phoneDTO = searchPhoneService.getBatteryNum(brand);
-        return phoneDTO;
-    }
-
     @Operation(summary = "新建手机型号(测试)")
     @PostMapping("/createPhoneModel")
     public Result<String> createPhoneModel(@Valid @RequestBody PhoneDTO phone){
@@ -66,4 +55,20 @@ public class SearchPhoneController {
     public List<PhoneModel> searchByPhoneName(@RequestParam String phoneName){
         return phoneModelService.findByPhoneName(phoneName);
     }
+
+    @Operation(summary = "按照品牌名称进行分页查询")
+    @GetMapping("/getPageSearch")
+    public Page<PhoneModel> pageSearchByModel(@RequestParam String model , @RequestParam int page , @RequestParam int size){
+        Pageable pageable = PageRequest.of(page, size , Sort.by("price").descending());
+        return phoneModelService.findByModel(model , pageable);
+    }
+
+    @Operation(summary = "按照品牌名称和价格区间进行查询价格")
+    @GetMapping("/getPageSearchByModelAndPrice")
+    public Page<PhoneModel> pageSearchByModelAndPrince(@RequestParam String model, @RequestParam int page, @RequestParam int size,@RequestParam double minPrice, @RequestParam double maxPrice){
+        Pageable pageable = PageRequest.of(page, size);
+        return phoneModelService.findByBrandAndPriceBetween(model, minPrice, maxPrice, pageable);
+    }
+
+
 }   
