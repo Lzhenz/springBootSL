@@ -29,5 +29,11 @@ public class GlobalExceptionHandler {
         return Result.fail(e.getMessage());
         // return Result.fail(e.getMessage());
     }
+
+    // 业务异常
+    @ExceptionHandler(BusinessException.class)
+    public Result<?> handleBusinessException(BusinessException e){
+        return Result.fail(e.getMessage());
+    }
     
 }
