@@ -1,20 +1,10 @@
 package com.example.helloSpringBoot.service;
 
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
->>>>>>> 038a7af (统一返回接口)
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-<<<<<<< HEAD
-import org.springframework.stereotype.Service;
-
-import com.example.helloSpringBoot.Repository.PhoneModelRepository;
-import com.example.helloSpringBoot.entity.PhoneModel;
-
-=======
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +14,6 @@ import com.example.helloSpringBoot.entity.PhoneModel;
 import com.example.helloSpringBoot.exception.BusinessException;
 
 import jakarta.persistence.criteria.Predicate;
->>>>>>> 038a7af (统一返回接口)
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -32,19 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class PhoneModelService {
     private final PhoneModelRepository phoneModelRepository;
 
-<<<<<<< HEAD
-    public List<PhoneModel> findByPhoneName(String phoneName){
-        return phoneModelRepository.findByPhonename(phoneName);
-    }
-
-    public Page<PhoneModel> findByModel(String model , Pageable pageable){
-        return phoneModelRepository.findByModel(model, pageable);
-    }
-
-    public Page<PhoneModel> findByBrandAndPriceBetween(String model, Double minPrice, Double maxPrice, Pageable pageable){
-        return phoneModelRepository.findByModelAndPriceBetween(model, minPrice, maxPrice, pageable);
-    }
-=======
     public List<PhoneResponseDTO> findByPhoneName(String phoneName){
         List<PhoneModel> phoneModels = phoneModelRepository.findByPhonename(phoneName);
 
@@ -121,5 +97,4 @@ public class PhoneModelService {
         return dto;
     }
 
->>>>>>> 038a7af (统一返回接口)
 }
