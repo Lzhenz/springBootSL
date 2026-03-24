@@ -2,6 +2,11 @@ package com.example.helloSpringBoot.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.helloSpringBoot.DTO.PhoneDTO;
+import com.example.helloSpringBoot.DTO.PhoneResponseDTO;
 import com.example.helloSpringBoot.common.Result;
-import com.example.helloSpringBoot.entity.PhoneModel;
 import com.example.helloSpringBoot.service.PhoneModelService;
 import com.example.helloSpringBoot.service.PhoneService;
 import com.example.helloSpringBoot.service.SearchPhoneService;
@@ -33,21 +38,6 @@ public class SearchPhoneController {
         this.phoneModelService = phoneModelService;
     }
 
-    @Operation(summary = "查询手机的名称专名(测试)")
-    @GetMapping("/searchPhoneName")
-    public PhoneDTO getSearchPhoneName(@RequestParam String brand){
-        // 调用service
-        PhoneDTO phoneDTO = searchPhoneService.getPhoneNameOneTime(brand);
-        return phoneDTO;
-    }
-
-    @Operation(summary = "查询手机的电池容量(测试)")
-    @GetMapping("/battery")
-    public PhoneDTO getBatteryNum(@RequestParam String brand){
-        PhoneDTO phoneDTO = searchPhoneService.getBatteryNum(brand);
-        return phoneDTO;
-    }
-
     @Operation(summary = "新建手机型号(测试)")
     @PostMapping("/createPhoneModel")
     public Result<String> createPhoneModel(@Valid @RequestBody PhoneDTO phone){
@@ -63,7 +53,29 @@ public class SearchPhoneController {
 
     @Operation(summary = "按照phoneName进行查询数据,")
     @PostMapping("/getByPhoneName")
-    public List<PhoneModel> searchByPhoneName(@RequestParam String phoneName){
+    public List<PhoneResponseDTO> searchByPhoneName(@RequestParam String phoneName){
         return phoneModelService.findByPhoneName(phoneName);
+    }
+
+    @Operation(summary = "按照品牌名称进行分页查询")
+    @GetMapping("/getPageSearch")
+    public Page<PhoneResponseDTO> pageSearchByModel(@RequestParam String model , @RequestParam int page , @RequestParam int size){
+        Pageable pageable = PageRequest.of(page, size , Sort.by("price").descending());
+        return phoneModelService.findByModel(model , pageable);
+    }
+
+    @Operation(summary = "按照品牌名称和价格区间进行查询价格")
+    @GetMapping("/getPageSearchByModelAndPrice")
+    public Page<PhoneResponseDTO> pageSearchByModelAndPrince(@RequestParam String model, @RequestParam int page, @RequestParam int size,@RequestParam double minPrice, @RequestParam double maxPrice){
+        Pageable pageable = PageRequest.of(page, size);
+        return phoneModelService.findByBrandAndPriceBetween(model, minPrice, maxPrice, pageable);
+    }
+
+    @Operation(summary = "按照任意条件进行查询")
+    @GetMapping("/getPageSearchByAnyCase")
+    public Result<Page<PhoneResponseDTO>> pageSearchByAnyCase(@RequestParam String model, @RequestParam int page, @RequestParam int size,@RequestParam double minPrice, @RequestParam double maxPrice){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<PhoneResponseDTO> pageResult = phoneModelService.search(model, minPrice, maxPrice, pageable);
+        return Result.success(pageResult);
     }
 }   

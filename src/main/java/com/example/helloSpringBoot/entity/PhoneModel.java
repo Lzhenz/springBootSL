@@ -26,4 +26,5 @@ public class PhoneModel {
 
     private LocalDateTime createdat;
     
+    private String stock; 
 }

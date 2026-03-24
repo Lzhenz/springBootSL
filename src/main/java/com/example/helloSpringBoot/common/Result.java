@@ -9,9 +9,17 @@ public class Result<T> {
     private String message;
     private T data;
 
+    public Result(){}
+
+    public Result(Integer code, String message, T data){
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
     public static <T> Result<T> success(T data){
         Result<T> r = new Result<T>();
-        r.code = 0;
+        r.code = 200;
         r.message = "success";
         r.data = data;
 
@@ -20,8 +28,9 @@ public class Result<T> {
 
     public static <T> Result<T> fail(String message){
         Result<T> r = new Result<T>();
-        r.code = -1;
+        r.code = 500;
         r.message = message;
+        r.data = null;
         
         return r;
     }
